@@ -1,20 +1,28 @@
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vite'
-import { glob } from 'node:fs/promises'
+import { readdirSync } from 'node:fs'
 import tailwindcss from '@tailwindcss/vite'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
-const inputs = [];
-
-for await (const entry of glob('src/**/*.html')) {
-  inputs.push(resolve(__dirname, entry));
+function getHtmlInputs(dir) {
+  const inputs = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = resolve(dir, entry.name)
+    if (entry.isDirectory()) {
+      inputs.push(...getHtmlInputs(fullPath))
+    } else if (entry.name.endsWith('.html')) {
+      inputs.push(fullPath)
+    }
+  }
+  return inputs
 }
+
+const inputs = getHtmlInputs(resolve(__dirname, 'src'))
 
 export default defineConfig({
   plugins: [tailwindcss()],
-
   root: resolve(__dirname, 'src'),
   build: {
     emptyOutDir: true,
