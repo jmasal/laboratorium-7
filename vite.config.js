@@ -19,6 +19,19 @@ function getHtmlInputs(dir) {
   return inputs
 }
 
+export default defineConfig({
+  plugins: [tailwindcss()],
+  base: '/laboratorium-7/',
+  root: resolve(__dirname, 'src'),
+  build: {
+    emptyOutDir: true,
+    rollupOptions: {
+      input: inputs,
+    },
+    outDir: resolve(__dirname, 'dist'),
+  },
+})
+
 const inputs = getHtmlInputs(resolve(__dirname, 'src'))
 
 export default defineConfig({
