@@ -124,7 +124,7 @@ function openEditModal(article) {
 function bindEvents() {
   document.getElementById("btnAddArticle").addEventListener("click", () => {
     if (!isLoggedIn) {
-      window.location.href = "/login/";
+      window.location.href = "/laboratorium-7/login/";
       return;
     }
     openAddModal();

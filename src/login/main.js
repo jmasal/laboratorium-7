@@ -4,7 +4,7 @@ const form    = document.getElementById("loginForm");
 const errorEl = document.getElementById("loginError");
 
 supabase.auth.getSession().then(({ data: { session } }) => {
-  if (session) window.location.href = "/";
+  if (session) window.location.href = "/laboratorium-7/";
 });
 
 form.addEventListener("submit", async (e) => {
@@ -23,5 +23,5 @@ form.addEventListener("submit", async (e) => {
     return;
   }
 
-  window.location.href = "/";
+  window.location.href = "/laboratorium-7/";
 });
