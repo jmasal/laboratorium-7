@@ -1,11 +1,11 @@
 import { supabase } from "../api-client";
 
-// Jeśli już zalogowany – wróć na stronę główną
-const { data: { session } } = await supabase.auth.getSession();
-if (session) window.location.href = "/";
+const form    = document.getElementById("loginForm");
+const errorEl = document.getElementById("loginError");
 
-const form     = document.getElementById("loginForm");
-const errorEl  = document.getElementById("loginError");
+supabase.auth.getSession().then(({ data: { session } }) => {
+  if (session) window.location.href = "/";
+});
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
